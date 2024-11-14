@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod":"mg build --configuration production --base-href /angular_tutorial",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:angular_tutorial": "node dist/angular_tutorial/server/server.mjs"
