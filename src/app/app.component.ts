@@ -12,5 +12,5 @@ import { SiginComponent } from './components/auth/sigin/sigin.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  nombre = 'Antonio Gómez';
+  title = 'angular-tutorial-app';
 }
