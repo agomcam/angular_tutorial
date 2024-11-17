@@ -35,6 +35,9 @@ jobs:
       - name: Build Angular APP
         run: npm run build:prod
 
+      - name: Rename Index.csr.html to index.html
+        run: mv dist/angular_tutorial/browser/index.csr.html dist/angular_tutorial/browser/index.html
+
       - name: Deploy GitHub pages
         uses: crazy-max/ghaction-github-pages@v4.1.0
         with:
