@@ -1,1 +1,162 @@
-<p>tasklist works!</p>
+<div class="container">
+    <div class="row">
+
+        <!-- Tarejeta -->
+        <div class="col-md-12">
+
+
+            <div class="card mb-3" *ngFor="let tarea of tasklist">
+                <div class="card-body">
+                    <h5>{{tarea.name}}</h5>
+                    <p class="card-text">Descripción: {{tarea.description}}</p>
+
+                    <p class="card-text"
+                        [ngClass]="{'bg-danger': tarea.priority == 'H','bg-success':tarea.priority == 'L', 'bg-warning':tarea.priority=='M'}"
+                        [ngSwitch]="tarea.priority">Prioridad:
+
+                        <span *ngSwitchCase="'H'">
+                            <ng-container *ngIf="tarea.status != 'C'">
+                                <i class="bi bi-arrow-down-circle-fill"></i>
+                            </ng-container>
+                            Alta</span>
+
+                        <span *ngSwitchCase="'M'">
+                            <ng-container *ngIf="tarea.status != 'C'">
+                                <i class="bi bi-arrow-up-circle-fill"></i><i class="bi bi-arrow-down-circle-fill"></i>
+                            </ng-container>
+                            Media</span>
+                        <span *ngSwitchCase="'L'">
+                            <ng-container *ngIf="tarea.status != 'C'">
+                                <i class="bi bi-arrow-up-circle-fill"></i>
+                            </ng-container>
+                            Baja</span>
+                    </p>
+
+                    <p class="card-text"
+                        [ngClass]="{'bg-danger':tarea.status=='P', 'bg-success':tarea.status == 'C', 'bg-warning': tarea.status == 'IP'}"
+                        [ngSwitch]="tarea.status">
+                        Estado:
+                        <span *ngSwitchCase="'C'"> <i class="bi bi-arrow-return-right"></i>Completada</span>
+                        <span *ngSwitchCase="'IP'"><i class="bi bi-check-lg"></i>En proceso</span>
+                        <span *ngSwitchCase="'P'"><i class="bi bi-play-fill"></i>Pendiente</span>
+
+                    </p>
+                    <p class="card-text">Fecha de expiración: {{tarea.expirationDate}}</p>
+                    <p class="card-text">Acciones:<i class="bi bi-pencil-square"></i>
+                        <i class="bi bi-trash"></i>
+                    </p>
+                </div>
+
+            </div>
+<!-- 
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Prioridad</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Fecha expiración</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr *ngFor="let tarea of tasklist">
+
+                        <ng-container *ngIf="!tarea.isDelete">
+                            <td>{{tarea.id}}</td>
+                            <td>{{tarea.name}}</td>
+                            <td>{{tarea.description}}</td>
+
+
+
+                            <td [ngStyle]="{'color': tarea.getPriorityColor()}"
+                                [ngClass]="{'table-danger': tarea.priority == 'H','table-warning': tarea.priority == 'M', 'table-success':tarea.priority == 'L',}"
+                                [ngSwitch]="tarea.priority">
+                                <span *ngSwitchCase="'H'"><ng-container *ngIf="tarea.status != 'C'">
+                                        <i class="bi bi-arrow-down-circle-fill"></i>
+                                    </ng-container>Alta</span>
+                                <span *ngSwitchCase="'M'">
+                                    <ng-container *ngIf="tarea.status != 'C'">
+                                        <i class="bi bi-arrow-up-circle-fill"></i><i
+                                            class="bi bi-arrow-down-circle-fill"></i>
+                                    </ng-container>
+                                    Media</span>
+                                <span *ngSwitchCase="'L'">
+                                    <ng-container *ngIf="tarea.status != 'C'">
+                                        <i class="bi bi-arrow-up-circle-fill"></i>
+                                    </ng-container>Baja</span>
+                            </td>
+
+                            <td [ngClass]="{'table-danger': tarea.status == 'P','table-warning': tarea.status == 'IP', 'table-success':tarea.status == 'C'}"
+                                [ngSwitch]="tarea.status">
+                                <span *ngSwitchCase="'C'"> <i class="bi bi-arrow-return-right"></i>Completada</span>
+                                <span *ngSwitchCase="'IP'"><i class="bi bi-check-lg"></i>En proceso</span>
+                                <span *ngSwitchCase="'P'"><i class="bi bi-play-fill"></i>Pendiente</span>
+                            </td>
+
+
+                            <td>{{tarea.expirationDate}}</td>
+                            <td class="d-flex justify-content-center"><i class="bi bi-pencil-square"></i>
+                                <i class="bi bi-trash"></i>
+                            </td>
+                        </ng-container>
+
+
+                    </tr> -->
+
+
+                    <!-- @for (tarea of tasklist; track tarea.id) {
+                    @if (!tarea.isDelete) {
+                    <tr>
+                        <th scope="row">{{tarea.id}}</th>
+                        <td>{{tarea.name}}</td>
+                        <td>{{tarea.description}}</td>
+
+
+                        @switch (tarea.priority) {
+                        @case ("H") {
+                        <td>Alta</td>
+                        }
+                        @case ("M") {
+                        <td>Media</td>
+                        }
+                        @case ("L") {
+                        <td>Baja</td>
+                        }
+                        }
+
+
+                        @switch (tarea.status) {
+                        @case ("C") {
+                        <td>Completada</td>
+                        }
+                        @case ("IP") {
+                        <td>En proceso</td>
+                        }
+                        @case ("P") {
+                        <td>Pendiente</td>
+                        }
+                        }
+                        <td>{{tarea.expirationDate}}</td>
+                        <td>icons</td>
+
+                    </tr>
+                    }
+                    } -->
+
+
+                <!-- </tbody>
+            </table>
+            </div> -->
+
+
+
+        </div>
+    </div>
+
+</div>
