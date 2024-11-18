@@ -8,6 +8,6 @@ import { TasklistComponent } from './components/task/tasklist/tasklist.component
 export const routes: Routes = [
    {path:'login',component:LoginComponent},
    {path:'sigin',component:SiginComponent},
-   {path:'tasklist',component:TasklistComponent}
-   // {path:'',redirectTo:'/tasklist',pathMatch:'full'}
+   {path:'tasklist',component:TasklistComponent},
+   {path:'',redirectTo:'/tasklist',pathMatch:'full'}
 ];
