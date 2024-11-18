@@ -34,4 +34,44 @@ export class TasklistComponent {
     }
 
   }
+
+  deleteTask(id: number) {
+    for (let index = 0; index < this.tasklist.length; index++) {
+      if (this.tasklist[index].id == id) {
+        this.tasklist[index].isDelete = true;
+        break;
+      }
+
+    }
+  }
+
+
+  lowerPriority(id: number) {
+    for (let index = 0; index < this.tasklist.length; index++) {
+      if (this.tasklist[index].id == id) {
+        if (this.tasklist[index].priority == TaskPriority.HIGH) {
+          this.tasklist[index].priority = TaskPriority.MEDIUM
+        } else if (this.tasklist[index].priority == TaskPriority.MEDIUM) {
+          this.tasklist[index].priority = TaskPriority.LOW
+        }
+
+        break;
+      }
+    }
+  }
+
+
+  raiseifpriority(id: number) {
+    for (let index = 0; index < this.tasklist.length; index++) {
+      if (this.tasklist[index].id == id) {
+        if (this.tasklist[index].priority == TaskPriority.MEDIUM) {
+          this.tasklist[index].priority = TaskPriority.HIGH
+        } else if (this.tasklist[index].priority == TaskPriority.LOW) {
+          this.tasklist[index].priority = TaskPriority.MEDIUM
+        }
+
+        break;
+      }
+    }
+  }
 }
