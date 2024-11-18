@@ -17,5 +17,21 @@ export class TasklistComponent {
     new Task(4, "Tarea 4", "Descripción Tarea 4", TaskPriority.HIGH, TaskStatus.COMPLETED, new Date("11/8/2024"), new Date("11/21/2024"), false),
     new Task(5, "Tarea 5", "Descripción Tarea 5", TaskPriority.MEDIUM, TaskStatus.PENDING, new Date("11/10/2024"), new Date("11/30/2024"), false)
   ]
+
+  setStatus(id: number) {
+    for (let index = 0; index < this.tasklist.length; index++) {
+      if (this.tasklist[index].id == id) {
+        if (this.tasklist[index].status == TaskStatus.COMPLETED) {
+          this.tasklist[index].status = TaskStatus.PENDING
+        } else if (this.tasklist[index].status == TaskStatus.IN_PROGRESS) {
+          this.tasklist[index].status = TaskStatus.COMPLETED
+        } else {
+          this.tasklist[index].status = TaskStatus.IN_PROGRESS
+        }
+
+        break;
+      }
+    }
+
+  }
 }
- 

@@ -36,9 +36,12 @@
                         [ngClass]="{'bg-danger':tarea.status=='P', 'bg-success':tarea.status == 'C', 'bg-warning': tarea.status == 'IP'}"
                         [ngSwitch]="tarea.status">
                         Estado:
-                        <span *ngSwitchCase="'C'"> <i class="bi bi-arrow-return-right"></i>Completada</span>
-                        <span *ngSwitchCase="'IP'"><i class="bi bi-check-lg"></i>En proceso</span>
-                        <span *ngSwitchCase="'P'"><i class="bi bi-play-fill"></i>Pendiente</span>
+                        <span *ngSwitchCase="'C'"> <i class="bi bi-arrow-return-right"
+                                (click)="setStatus(tarea.id)"></i>Completada</span>
+                        <span *ngSwitchCase="'IP'"><i class="bi bi-check-lg" (click)="setStatus(tarea.id)"></i>En
+                            proceso</span>
+                        <span *ngSwitchCase="'P'"><i class="bi bi-play-fill"
+                                (click)="setStatus(tarea.id)"></i>Pendiente</span>
 
                     </p>
                     <p class="card-text">Fecha de expiración: {{tarea.expirationDate}}</p>
@@ -48,7 +51,7 @@
                 </div>
 
             </div>
-<!-- 
+            <!-- 
 
             <table class="table">
                 <thead>
@@ -110,7 +113,7 @@
                     </tr> -->
 
 
-                    <!-- @for (tarea of tasklist; track tarea.id) {
+            <!-- @for (tarea of tasklist; track tarea.id) {
                     @if (!tarea.isDelete) {
                     <tr>
                         <th scope="row">{{tarea.id}}</th>
@@ -150,7 +153,7 @@
                     } -->
 
 
-                <!-- </tbody>
+            <!-- </tbody>
             </table>
             </div> -->
 
