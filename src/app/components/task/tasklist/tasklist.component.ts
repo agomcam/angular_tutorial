@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Task, TaskPriority, TaskStatus } from '../../../models/task.models';
 import { CommonModule } from '@angular/common';
+import { ResumeComponent } from '../resume/resume.component';
+import { TaskEvent } from '../../../models/TaskEvent.models';
 
 @Component({
   selector: 'app-tasklist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ResumeComponent],
   templateUrl: './tasklist.component.html',
   styleUrl: './tasklist.component.css'
 })
@@ -17,6 +19,30 @@ export class TasklistComponent {
     new Task(4, "Tarea 4", "Descripción Tarea 4", TaskPriority.HIGH, TaskStatus.COMPLETED, new Date("11/8/2024"), new Date("11/21/2024"), false),
     new Task(5, "Tarea 5", "Descripción Tarea 5", TaskPriority.MEDIUM, TaskStatus.PENDING, new Date("11/10/2024"), new Date("11/30/2024"), false)
   ]
+
+  modifyTask(taskEvent: TaskEvent) {
+
+    switch (taskEvent.action) {
+      case "raiseifpriority":
+        this.raiseifpriority(taskEvent.taskId);
+        break;
+
+      case "deleteTask":
+        this.deleteTask(taskEvent.taskId);
+        break;
+
+      case "lowerPriority":
+        this.lowerPriority(taskEvent.taskId);
+        break;
+
+      case "setStatus":
+        this.setStatus(taskEvent.taskId);
+        break;
+
+      default:
+        break;
+    }
+  }
 
   setStatus(id: number) {
     for (let index = 0; index < this.tasklist.length; index++) {

@@ -4,57 +4,11 @@
         <!-- Tarejeta -->
         <div class="col-md-12">
 
-            <div class="ng-container" *ngFor="let tarea of tasklist ">
+            <ng-container class="ng-container" *ngFor="let tarea of tasklist ">
 
 
-                <div class="card mb-3" *ngIf="!tarea.isDelete">
-                    <div class="card-body">
-                        <h5>{{tarea.name}}</h5>
-                        <p class="card-text">Descripción: {{tarea.description}}</p>
-
-                        <p class="card-text"
-                            [ngClass]="{'bg-danger': tarea.priority == 'H','bg-success':tarea.priority == 'L', 'bg-warning':tarea.priority=='M'}"
-                            [ngSwitch]="tarea.priority">Prioridad:
-
-                            <span *ngSwitchCase="'H'">
-                                <ng-container *ngIf="tarea.status != 'C'">
-                                    <i class="bi bi-arrow-down-circle-fill" (click)="lowerPriority(tarea.id)"></i>
-                                </ng-container>
-                                Alta</span>
-
-                            <span *ngSwitchCase="'M'">
-                                <ng-container *ngIf="tarea.status != 'C'">
-                                    <i class="bi bi-arrow-up-circle-fill" (click)="raiseifpriority(tarea.id)"></i><i
-                                        class="bi bi-arrow-down-circle-fill" (click)="lowerPriority(tarea.id)"></i>
-                                </ng-container>
-                                Media</span>
-                            <span *ngSwitchCase="'L'">
-                                <ng-container *ngIf="tarea.status != 'C'">
-                                    <i class="bi bi-arrow-up-circle-fill" (click)="raiseifpriority(tarea.id)"></i>
-                                </ng-container>
-                                Baja</span>
-                        </p>
-
-                        <p class="card-text"
-                            [ngClass]="{'bg-danger':tarea.status=='P', 'bg-success':tarea.status == 'C', 'bg-warning': tarea.status == 'IP'}"
-                            [ngSwitch]="tarea.status">
-                            Estado:
-                            <span *ngSwitchCase="'C'"> <i class="bi bi-arrow-return-right"
-                                    (click)="setStatus(tarea.id)"></i>Completada</span>
-                            <span *ngSwitchCase="'IP'"><i class="bi bi-check-lg" (click)="setStatus(tarea.id)"></i>En
-                                proceso</span>
-                            <span *ngSwitchCase="'P'"><i class="bi bi-play-fill"
-                                    (click)="setStatus(tarea.id)"></i>Pendiente</span>
-
-                        </p>
-                        <p class="card-text">Fecha de expiración: {{tarea.expirationDate}}</p>
-                        <p class="card-text">Acciones:<i class="bi bi-pencil-square"></i>
-                            <i class="bi bi-trash" (click)="deleteTask(tarea.id)"></i>
-                        </p>
-                    </div>
-
-                </div>
-            </div>
+                <app-resume [task]="tarea" (eventTaskModify)="modifyTask($event)" />
+            </ng-container>
             <!-- 
 
             <table class="table">
