@@ -4,8 +4,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SiginComponent } from './components/auth/sigin/sigin.component';
-import { TasklistComponent } from "./components/task/tasklist/tasklist.component";
-import {FormsModule} from '@angular/forms'
+import {TasklistComponent} from "./components/task/tasklist/tasklist.component";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 @Component({
   selector: 'app-root',
   standalone: true,
