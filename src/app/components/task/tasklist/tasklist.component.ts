@@ -21,6 +21,26 @@ export class TasklistComponent {
     new Task(5, "Tarea 5", "Descripción Tarea 5", TaskPriority.MEDIUM, TaskStatus.PENDING, new Date("11/10/2024"), new Date("11/30/2024"), false)
   ]
 
+
+  taskToEdit: Task | null = null; // Tarea actualmente en edición
+
+  addNewTask(task: Task) {
+    this.tasklist.push(task); // Añadir la nueva tarea al array
+  }
+
+  saveTask(updatedTask: Task) {
+    const index = this.tasklist.findIndex(task => task.id === updatedTask.id);
+    if (index > -1) {
+      this.tasklist[index] = updatedTask; // Reemplazar la tarea existente
+    }
+    this.taskToEdit = null; // Limpiar el modo de edición
+  }
+
+  setTaskToEdit(task: Task) {
+    this.taskToEdit = task; // Asignar la tarea seleccionada al formulario
+  }
+
+
   modifyTask(taskEvent: TaskEvent) {
 
     switch (taskEvent.action) {

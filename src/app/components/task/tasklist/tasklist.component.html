@@ -3,15 +3,21 @@
 
         <!-- Tarejeta -->
 
-        <app-taskform class="mb-5"></app-taskform>
+      <app-taskform
+        [taskToEdit]="taskToEdit"
+        (saveTask)="saveTask($event)"
+        (addTask)="addNewTask($event)">
+      </app-taskform>
+
+
         <div class="col-md-12">
 
             <ng-container class="ng-container" *ngFor="let tarea of tasklist ">
 
 
-                <app-resume [task]="tarea" (eventTaskModify)="modifyTask($event)" />
+                <app-resume [task]="tarea" (eventTaskModify)="modifyTask($event)" (editTask)="setTaskToEdit($event)" />
             </ng-container>
-            <!-- 
+            <!--
 
             <table class="table">
                 <thead>

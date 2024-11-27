@@ -19,6 +19,9 @@ export class ResumeComponent {
   @Output()
   eventTaskModify = new EventEmitter<TaskEvent>();
 
+  @Output()
+  editTask = new EventEmitter<Task>();
+
   setStatus(id: number) {
     this.eventTaskModify.emit(new TaskEvent("setStatus", this.task.id))
 
@@ -39,4 +42,7 @@ export class ResumeComponent {
     this.eventTaskModify.emit(new TaskEvent("raiseifpriority", this.task.id))
   }
 
+  onEditTask() {
+    this.editTask.emit(this.task); // Emitir la tarea actual para ser editada
+  }
 }
