@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { Task, TaskPriority, TaskStatus } from '../../../models/task.models';
-import { CommonModule } from '@angular/common';
-import { ResumeComponent } from '../resume/resume.component';
-import { TaskEvent } from '../../../models/TaskEvent.models';
-import { TaskformComponent } from '../taskform/taskform.component';
+import {Component} from '@angular/core';
+import {Task, TaskPriority, TaskStatus} from '../../../models/task.models';
+import {CommonModule} from '@angular/common';
+import {ResumeComponent} from '../resume/resume.component';
+import {TaskEvent} from '../../../models/TaskEvent.models';
+import {TaskformComponent} from '../taskform/taskform.component';
 
 @Component({
   selector: 'app-tasklist',

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {customValidator} from './taskForm.validators';
 
 @Component({
   selector: 'app-taskform',
@@ -14,10 +15,10 @@ export class TaskformComponent {
 
   constructor(formBuilder: FormBuilder) {
     this.formTaskEdit = formBuilder.group({
-      'name': ['', [Validators.required]],
+      'name': ['', [Validators.required, Validators.maxLength(50),Validators.minLength(2)]],
       'description': ['', [Validators.required]],
       'priority': ['', [Validators.required]],
-      'expirationDate': ['', [Validators.required]],
+      'expirationDate': ['', [Validators.required, customValidator()]],
 
     })
   }
