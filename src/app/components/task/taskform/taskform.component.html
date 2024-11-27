@@ -7,18 +7,16 @@
         <label for="exampleFormControlInput1">Nombre</label>
         <input type="text"
                [ngClass]="{
-                        'is-invalid': this.formTaskEdit.get('name')?.invalid,
+                        'is-invalid': this.formTaskEdit.get('name')?.invalid && formTaskEdit.get('name')?.touched,
                         'is-valid': this.formTaskEdit.get('name')?.valid
                       }"
 
                class="form-control" formControlName="name" id="exampleFormControlInput1">
 
         <div>
-          <small class="text-danger" *ngIf="formTaskEdit.get('name')?.errors?.['required']"> El campo nombre es
+          <small class="text-danger" *ngIf="formTaskEdit.get('name')?.errors?.['required'] && formTaskEdit.get('name')?.touched"> El campo nombre es
             requerido </small>
-          <small class="text-danger" *ngIf="formTaskEdit.get('name')?.errors?.['minlength']">El campo tiene que tener 2
-            caracteres como minimo</small>
-          <small class="text-danger" *ngIf="formTaskEdit.get('name')?.errors?.['maxlength']">El campo tiene que tener
+          <small class="text-danger" *ngIf="formTaskEdit.get('name')?.errors?.['maxlength'] && formTaskEdit.get('name')?.touched">El campo tiene que tener
             menos de 50 caracteres</small>
         </div>
       </div>
@@ -28,18 +26,21 @@
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Descripcion</label>
         <textarea class="form-control"
-                  [ngClass]="{'is-invalid': this.formTaskEdit.get('description')?.invalid, 'is-valid':this.formTaskEdit.get('description')?.valid}"
+                  [ngClass]="{'is-invalid': this.formTaskEdit.get('description')?.invalid && formTaskEdit.get('description')?.touched,
+                  'is-valid':this.formTaskEdit.get('description')?.valid}"
                   formControlName="description" id="exampleFormControlTextarea1" rows="10"></textarea>
 
-        <small class="text-danger" *ngIf="formTaskEdit.get('description')?.errors?.['required']"> El campo descripcion
+        <small class="text-danger" *ngIf="formTaskEdit.get('description')?.errors?.['required'] && formTaskEdit.get('description')?.touched"> El campo descripcion
           es
           requerido </small>
       </div>
+
       <!-- Prioridad -->
       <div class="form-group">
         <label for="exampleFormControlSelect1">Prioridad</label>
         <select
-          [ngClass]="{'is-invalid': this.formTaskEdit.get('priority')?.invalid, 'is-valid':this.formTaskEdit.get('priority')?.valid}"
+          [ngClass]="{'is-invalid': this.formTaskEdit.get('priority')?.invalid && formTaskEdit.get('priority')?.touched,
+           'is-valid':this.formTaskEdit.get('priority')?.valid}"
           class="form-control"
           formControlName="priority" id="exampleFormControlSelect1">
           <option value="H">Alta</option>
@@ -47,8 +48,12 @@
           <option value="L">Baja</option>
         </select>
 
-        <small class="text-danger" *ngIf="formTaskEdit.get('priority')?.errors?.['required']"> El campo prioridad es
-          requerido </small>
+        <div>
+          <small class="text-danger" *ngIf="formTaskEdit.get('priority')?.errors?.['required'] && formTaskEdit.get('priority')?.touched"> El campo prioridad es
+            requerido </small>
+          <small class="text-danger" *ngIf="formTaskEdit.get('priority')?.errors?.['invalidValuePriority'] && formTaskEdit.get('priority')?.touched"> El valor tiene que ser 'H' 'M' O 'L' </small>
+        </div>
+
       </div>
 
       <!-- Fecha de expiracion -->
