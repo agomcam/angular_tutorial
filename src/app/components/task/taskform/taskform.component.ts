@@ -1,8 +1,9 @@
-import { CommonModule } from '@angular/common';
-import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {customValidator, customValidatorPriority} from './taskForm.validators';
 import {Task, TaskStatus} from '../../../models/task.models';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 
 @Component({
   selector: 'app-taskform',
@@ -11,7 +12,7 @@ import {Task, TaskStatus} from '../../../models/task.models';
   templateUrl: './taskform.component.html',
   styleUrl: './taskform.component.css'
 })
-export class TaskformComponent {
+export class TaskformComponent implements OnChanges, OnInit {
 
   @Input()
   taskToEdit: Task | null = null; // Tarea a editar (null si estamos añadiendo)
@@ -22,13 +23,20 @@ export class TaskformComponent {
 
   formTaskEdit: FormGroup
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(private route: ActivatedRoute, formBuilder: FormBuilder) {
     this.formTaskEdit = formBuilder.group({
       'name': ['', [Validators.required, Validators.maxLength(50)]],
       'description': ['', [Validators.required, Validators.maxLength(255)]],
       'priority': ['', [Validators.required, customValidatorPriority()]],
       'expirationDate': ['', [Validators.required, customValidator()]],
 
+    })
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      let id = params.get('id')
+      console.log(id)
     })
   }
 
