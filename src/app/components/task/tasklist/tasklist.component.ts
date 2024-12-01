@@ -25,17 +25,21 @@ export class TasklistComponent implements OnInit {
 
   taskToEdit: Task | null = null; // Tarea actualmente en edición
 
-  addNewTask(task: Task) {
-    this.taskService.addNewTask(task)
-  }
-
-  saveTask(updatedTask: Task) {
-    this.taskService.saveTask(updatedTask)
-  }
 
   setTaskToEdit(task: Task) {
-    this.taskService.setTaskToEdit(task)
+    this.taskService.setTaskToEdit(task); // Guardar la tarea en el servicio
+    this.taskToEdit = this.taskService.taskToEdit; // Vincular la tarea con el formulario
   }
+
+  saveTask(task: Task) {
+    if (task.id) {
+      this.taskService.saveTask(task); // Guardar la tarea editada
+    } else {
+      this.taskService.addNewTask(task); // Agregar nueva tarea
+    }
+    this.taskToEdit = null; // Limpiar la tarea en edición
+  }
+
 
 
   modifyTask(taskEvent: TaskEvent) {

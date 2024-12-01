@@ -33,12 +33,12 @@ export class TaskService {
     this.taskToEdit = null; // Limpiar el modo de edición
   }
 
-  taskToEdit: Task | null = null; // Tarea actualmente en edición
 
 
   setTaskToEdit(task: Task) {
     this.taskToEdit = task; // Asignar la tarea seleccionada al formulario
   }
+  taskToEdit: Task | null = null; // Tarea actualmente en edición
 
 
   modifyTask(taskEvent: TaskEvent) {

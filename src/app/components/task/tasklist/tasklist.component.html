@@ -1,19 +1,16 @@
 <div class="container">
-    <div class="row">
+  <div class="row">
 
-        <!-- Tarejeta -->
+    <!-- Tarejeta -->
 
-      <app-taskform
-        [taskToEdit]="taskToEdit"
-        (saveTask)="saveTask($event)"
-        (addTask)="addNewTask($event)"/>
+    <app-taskform [taskToEdit]="taskToEdit" (formSubmit)="saveTask($event)"/>
 
-        <div class="col-md-12">
-            <ng-container class="ng-container" *ngFor="let tarea of tasklist ">
-                <app-resume [task]="tarea" (eventTaskModify)="modifyTask($event)" (editTask)="setTaskToEdit($event)" />
-            </ng-container>
+    <div class="col-md-12">
+      <ng-container class="ng-container" *ngFor="let task of tasklist ">
+        <app-resume [task]="task" (eventTaskModify)="modifyTask($event)" (editTask)="setTaskToEdit($event)"/>
+      </ng-container>
 
-        </div>
     </div>
+  </div>
 
 </div>
