@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { LoginComponent } from './components/auth/login/login.component';
-import { SiginComponent } from './components/auth/sigin/sigin.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { SiginComponent } from './pages/auth/sigin/sigin.component';
 import {TasklistComponent} from "./components/task/tasklist/tasklist.component";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 @Component({

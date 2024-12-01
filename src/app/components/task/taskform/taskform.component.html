@@ -14,9 +14,13 @@
                class="form-control" formControlName="name" id="exampleFormControlInput1">
 
         <div>
-          <small class="text-danger" *ngIf="formTaskEdit.get('name')?.errors?.['required'] && formTaskEdit.get('name')?.touched"> El campo nombre es
+          <small class="text-danger"
+                 *ngIf="formTaskEdit.get('name')?.errors?.['required'] && formTaskEdit.get('name')?.touched"> El campo
+            nombre es
             requerido </small>
-          <small class="text-danger" *ngIf="formTaskEdit.get('name')?.errors?.['maxlength'] && formTaskEdit.get('name')?.touched">El campo tiene que tener
+          <small class="text-danger"
+                 *ngIf="formTaskEdit.get('name')?.errors?.['maxlength'] && formTaskEdit.get('name')?.touched">El campo
+            tiene que tener
             menos de 50 caracteres</small>
         </div>
       </div>
@@ -30,7 +34,9 @@
                   'is-valid':this.formTaskEdit.get('description')?.valid}"
                   formControlName="description" id="exampleFormControlTextarea1" rows="10"></textarea>
 
-        <small class="text-danger" *ngIf="formTaskEdit.get('description')?.errors?.['required'] && formTaskEdit.get('description')?.touched"> El campo descripcion
+        <small class="text-danger"
+               *ngIf="formTaskEdit.get('description')?.errors?.['required'] && formTaskEdit.get('description')?.touched">
+          El campo descripcion
           es
           requerido </small>
       </div>
@@ -49,9 +55,13 @@
         </select>
 
         <div>
-          <small class="text-danger" *ngIf="formTaskEdit.get('priority')?.errors?.['required'] && formTaskEdit.get('priority')?.touched"> El campo prioridad es
+          <small class="text-danger"
+                 *ngIf="formTaskEdit.get('priority')?.errors?.['required'] && formTaskEdit.get('priority')?.touched">
+            El campo prioridad es
             requerido </small>
-          <small class="text-danger" *ngIf="formTaskEdit.get('priority')?.errors?.['invalidValuePriority'] && formTaskEdit.get('priority')?.touched"> El valor tiene que ser 'H' 'M' O 'L' </small>
+          <small class="text-danger"
+                 *ngIf="formTaskEdit.get('priority')?.errors?.['invalidValuePriority'] && formTaskEdit.get('priority')?.touched">
+            El valor tiene que ser 'H' 'M' O 'L' </small>
         </div>
 
       </div>
@@ -88,3 +98,5 @@
     </form>
   </div>
 </div>
+
+
