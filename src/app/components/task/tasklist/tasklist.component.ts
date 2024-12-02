@@ -17,7 +17,8 @@ export class TasklistComponent implements OnInit {
 
   tasklist: Task[] = [];
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService) {
+  }
 
   ngOnInit(): void {
     this.tasklist = this.taskService.getTasks()
@@ -27,19 +28,23 @@ export class TasklistComponent implements OnInit {
 
 
   setTaskToEdit(task: Task) {
-    this.taskService.setTaskToEdit(task); // Guardar la tarea en el servicio
-    this.taskToEdit = this.taskService.taskToEdit; // Vincular la tarea con el formulario
+    this.taskService.setTaskToEdit(task);
+    this.taskToEdit = this.taskService.taskToEdit;
   }
 
   saveTask(task: Task) {
-    if (task.id) {
-      this.taskService.saveTask(task); // Guardar la tarea editada
+    if (task.id > 0) {
+      // Editar tarea existente
+      console.log('Guardando tarea editada:', task);
+      this.taskService.saveTask(task);
     } else {
-      this.taskService.addNewTask(task); // Agregar nueva tarea
+      task.id = Math.floor(Math.random() * 1000000)
+      console.log('Guardando nueva tarea:', task);
+      this.taskService.addNewTask(task);
     }
-    this.taskToEdit = null; // Limpiar la tarea en edición
+    this.tasklist = [...this.taskService.getTasks()]; // Actualizar la lista de tareas
+    this.taskToEdit = null; // Limpiar el modo de edición
   }
-
 
 
   modifyTask(taskEvent: TaskEvent) {

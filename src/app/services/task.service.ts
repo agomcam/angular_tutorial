@@ -22,7 +22,8 @@ export class TaskService {
   }
 
   addNewTask(task: Task) {
-    this.tasklist.push(task);
+    console.log('Añadiendo tarea al servicio:', task);
+    this.tasklist.push(task); // Agregar tarea a la lista
   }
 
   saveTask(updatedTask: Task) {
@@ -32,8 +33,6 @@ export class TaskService {
     }
     this.taskToEdit = null; // Limpiar el modo de edición
   }
-
-
 
   setTaskToEdit(task: Task) {
     this.taskToEdit = task; // Asignar la tarea seleccionada al formulario

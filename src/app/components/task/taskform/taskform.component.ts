@@ -44,15 +44,18 @@ export class TaskformComponent implements OnChanges, OnInit {
       const taskData = this.formTaskEdit.value;
 
       if (this.taskToEdit) {
+        // Editar tarea existente
         const updatedTask: Task = {
           ...this.taskToEdit,
           ...taskData,
           expirationDate: new Date(taskData.expirationDate),
         };
+        console.log('Editando tarea:', updatedTask);
         this.formSubmit.emit(updatedTask); // Emitir la tarea editada
       } else {
+        // Añadir nueva tarea
         const newTask: Task = new Task(
-          Math.floor(Math.random() * 1000000), // ID aleatorio
+          taskData.id = -1, // Generar ID aleatorio
           taskData.name,
           taskData.description,
           taskData.priority,
@@ -61,18 +64,22 @@ export class TaskformComponent implements OnChanges, OnInit {
           new Date(), // Fecha de creación
           false
         );
-        this.formSubmit.emit(newTask); // Emitir una nueva tarea
+        console.log('Añadiendo nueva tarea:', newTask);
+        this.formSubmit.emit(newTask); // Emitir nueva tarea
       }
 
-      this.formTaskEdit.reset();
+      this.formTaskEdit.reset(); // Limpiar el formulario
     } else {
       console.log('El formulario tiene errores:', this.formTaskEdit.errors);
     }
   }
 
 
+
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['taskToEdit'] && changes['taskToEdit'].currentValue) {
+      // Modo edición: llenar el formulario
       const task = changes['taskToEdit'].currentValue;
       this.formTaskEdit.patchValue({
         name: task.name,
@@ -81,9 +88,12 @@ export class TaskformComponent implements OnChanges, OnInit {
         expirationDate: task.expirationDate.toISOString().slice(0, 16),
       });
     } else {
-      this.formTaskEdit.reset(); // Limpiar el formulario si no hay tarea para editar
+      // Modo creación: limpiar el formulario
+      this.formTaskEdit.reset();
     }
   }
+
+
 
 
 }
