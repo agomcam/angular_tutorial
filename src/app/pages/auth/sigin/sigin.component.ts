@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { customValidatorPassword } from './sigin.validators';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
+import { error } from 'console';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sigin',
@@ -13,18 +16,25 @@ import { CommonModule } from '@angular/common';
 export class SiginComponent {
   formSingIn: FormGroup
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(formBuilder: FormBuilder, private serviceAuth: AuthService, private router: Router) {
     this.formSingIn = formBuilder.group({
-      'name': ['', [Validators.required]],
-      'suername': ['', [Validators.required]],
       'email': ['', [Validators.required, Validators.email]],
-      'user': ['', [Validators.required]],
-      'password': ['', [Validators.required]],
+      'password': ['', [Validators.required, Validators.minLength(6)]],
       'repeatPassword': ['', [Validators.required]],
     }, { validators: customValidatorPassword() })
   }
 
-  onSubmit(){
-    if(this.formSingIn.valid) console.log("Formulario Valido")
+  onSubmit() {
+    if (this.formSingIn.valid) {
+      console.log("Formulario Valido")
+      this.serviceAuth.register(this.formSingIn.value)
+        .then(response => {
+          console.log(response);
+          this.router.navigate(['/login'])
+
+        })
+        .catch(error => console.log(error))
+
+    }
   }
 }

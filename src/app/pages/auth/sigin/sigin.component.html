@@ -6,36 +6,12 @@
       <div class="col-md-12 d-flex justify-content-center">
           <form [formGroup]="formSingIn" (ngSubmit)="onSubmit()">
 
-              <!-- Nombre -->
-              <div class="form-group">
-                  <label for="exampleInputname">Nombre</label>
-                  <input [ngClass]="{'is-valid': formSingIn.get('name')?.valid, 
-                                     'is-invalid': formSingIn.get('name')?.invalid && formSingIn.get('name')?.touched}" 
-                         formControlName="name" type="text" class="form-control" id="exampleInputname" placeholder="Nombre">
-              </div>
-
-              <!-- Apellido -->
-              <div class="form-group">
-                  <label for="exampleInputapellido">Apellido</label>
-                  <input [ngClass]="{'is-valid': formSingIn.get('suername')?.valid, 
-                                     'is-invalid': formSingIn.get('suername')?.invalid && formSingIn.get('suername')?.touched}" 
-                         formControlName="suername" type="text" class="form-control" id="exampleInputapellido" placeholder="Apellido">
-              </div>
-
               <!-- Email -->
               <div class="form-group">
                   <label for="exampleInputEmail">Email</label>
                   <input [ngClass]="{'is-valid': formSingIn.get('email')?.valid, 
                                      'is-invalid': formSingIn.get('email')?.invalid && formSingIn.get('email')?.touched}" 
                          formControlName="email" type="email" class="form-control" id="exampleInputEmail" placeholder="Email">
-              </div>
-
-              <!-- Usuario -->
-              <div class="form-group">
-                  <label for="exampleInputUsuario">Usuario</label>
-                  <input [ngClass]="{'is-valid': formSingIn.get('user')?.valid, 
-                                     'is-invalid': formSingIn.get('user')?.invalid && formSingIn.get('user')?.touched}" 
-                         formControlName="user" type="text" class="form-control" id="exampleInputUsuario" placeholder="Usuario">
               </div>
 
               <!-- Contraseña -->
