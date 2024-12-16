@@ -1,59 +1,65 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12 d-flex justify-content-center">
-      <h1>Registro</h1>
-    </div>
-    <div class="col-md-12 d-flex justify-content-center">
-      <form>
+      <div class="col-md-12 d-flex justify-content-center">
+          <h1>Registro</h1>
+      </div>
+      <div class="col-md-12 d-flex justify-content-center">
+          <form [formGroup]="formSingIn" (ngSubmit)="onSubmit()">
 
-        <!-- Nombre -->
-        <div class="form-group">
-          <label for="exampleInputname">Nombre</label>
-          <input type="text" class="form-control" id="exampleInputname" aria-describedby="emailHelp"
-                 placeholder="Nombre">
+              <!-- Nombre -->
+              <div class="form-group">
+                  <label for="exampleInputname">Nombre</label>
+                  <input [ngClass]="{'is-valid': formSingIn.get('name')?.valid, 
+                                     'is-invalid': formSingIn.get('name')?.invalid && formSingIn.get('name')?.touched}" 
+                         formControlName="name" type="text" class="form-control" id="exampleInputname" placeholder="Nombre">
+              </div>
 
-        </div>
+              <!-- Apellido -->
+              <div class="form-group">
+                  <label for="exampleInputapellido">Apellido</label>
+                  <input [ngClass]="{'is-valid': formSingIn.get('suername')?.valid, 
+                                     'is-invalid': formSingIn.get('suername')?.invalid && formSingIn.get('suername')?.touched}" 
+                         formControlName="suername" type="text" class="form-control" id="exampleInputapellido" placeholder="Apellido">
+              </div>
 
-        <!-- Apellido -->
-        <div class="form-group">
-          <label for="exampleInputapellido">Apellido</label>
-          <input type="text" class="form-control" id="exampleInputapellido" aria-describedby="emailHelp"
-                 placeholder="Apellido">
-        </div>
+              <!-- Email -->
+              <div class="form-group">
+                  <label for="exampleInputEmail">Email</label>
+                  <input [ngClass]="{'is-valid': formSingIn.get('email')?.valid, 
+                                     'is-invalid': formSingIn.get('email')?.invalid && formSingIn.get('email')?.touched}" 
+                         formControlName="email" type="email" class="form-control" id="exampleInputEmail" placeholder="Email">
+              </div>
 
-        <!-- Email -->
-        <div class="form-group">
-          <label for="exampleInputEmail">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
-                 placeholder="Email">
-        </div>
+              <!-- Usuario -->
+              <div class="form-group">
+                  <label for="exampleInputUsuario">Usuario</label>
+                  <input [ngClass]="{'is-valid': formSingIn.get('user')?.valid, 
+                                     'is-invalid': formSingIn.get('user')?.invalid && formSingIn.get('user')?.touched}" 
+                         formControlName="user" type="text" class="form-control" id="exampleInputUsuario" placeholder="Usuario">
+              </div>
 
-        <!-- Usuario -->
-        <div class="form-group">
-          <label for="exampleInputUsuario">Usuario</label>
-          <input type="text" class="form-control" id="exampleInputUsuario" aria-describedby="emailHelp"
-                 placeholder="Email">
-        </div>
+              <!-- Contraseña -->
+              <div class="form-group">
+                  <label for="exampleInputPassword">Password</label>
+                  <input [ngClass]="{'is-valid': formSingIn.get('password')?.valid, 
+                                     'is-invalid': formSingIn.get('password')?.invalid && formSingIn.get('password')?.touched}" 
+                         formControlName="password" type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+              </div>
 
-        <!--Contraseña-->
-        <div class="form-group">
-          <label for="exampleInputPassword">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
-        </div>
+              <!-- Repetir Contraseña -->
+              <div class="form-group">
+                  <label for="exampleInputPasswordRepeat">Repeat Password</label>
+                  <input [ngClass]="{'is-valid': formSingIn.get('repeatPassword')?.valid && !formSingIn.hasError('passwordsMismatch'), 
+                                     'is-invalid': formSingIn.hasError('passwordsMismatch') && formSingIn.get('repeatPassword')?.touched}" 
+                         formControlName="repeatPassword" type="password" class="form-control" id="exampleInputPasswordRepeat" placeholder="Repeat Password">
+              </div>
 
-        <!--Repetir Contraseña-->
-        <div class="form-group">
-          <label for="exampleInputPasswordRepeat">Repeat Password</label>
-          <input type="password" class="form-control" id="exampleInputPasswordRepeat" placeholder="Repeat Password">
-        </div>
+              <div class="text-danger" *ngIf="formSingIn.hasError('passwordsMismatch') && formSingIn.touched">
+                  Las contraseñas no coinciden.
+              </div>
 
-
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-      </form>
-    </div>
+              <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+      </div>
   </div>
 </div>
