@@ -1,3 +1,4 @@
+<app-nav-bar></app-nav-bar>
 <div class="container">
   <div class="row">
       <div class="col-md-12 d-flex justify-content-center">
@@ -9,28 +10,28 @@
               <!-- Email -->
               <div class="form-group">
                   <label for="exampleInputEmail">Email</label>
-                  <input [ngClass]="{'is-valid': formSingIn.get('email')?.valid, 
-                                     'is-invalid': formSingIn.get('email')?.invalid && formSingIn.get('email')?.touched}" 
+                  <input [ngClass]="{'is-valid': formSingIn.get('email')?.valid,
+                                     'is-invalid': formSingIn.get('email')?.invalid && formSingIn.get('email')?.touched}"
                          formControlName="email" type="email" class="form-control" id="exampleInputEmail" placeholder="Email">
               </div>
 
               <!-- Contraseña -->
               <div class="form-group">
                   <label for="exampleInputPassword">Password</label>
-                  <input [ngClass]="{'is-valid': formSingIn.get('password')?.valid, 
-                                     'is-invalid': formSingIn.get('password')?.invalid && formSingIn.get('password')?.touched}" 
+                  <input [ngClass]="{'is-valid': formSingIn.get('password')?.valid,
+                                     'is-invalid': formSingIn.get('password')?.invalid && formSingIn.get('password')?.touched}"
                          formControlName="password" type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
               </div>
 
               <!-- Repetir Contraseña -->
               <div class="form-group">
                   <label for="exampleInputPasswordRepeat">Repeat Password</label>
-                  <input [ngClass]="{'is-valid': formSingIn.get('repeatPassword')?.valid && !formSingIn.hasError('passwordsMismatch'), 
-                                     'is-invalid': formSingIn.hasError('passwordsMismatch') && formSingIn.get('repeatPassword')?.touched}" 
+                  <input [ngClass]="{'is-valid': formSingIn.get('repeatPassword')?.valid && !formSingIn.hasError('passwordsMismatch'),
+                                     'is-invalid': formSingIn.hasError('passwordsMismatch') && formSingIn.get('repeatPassword')?.touched}"
                          formControlName="repeatPassword" type="password" class="form-control" id="exampleInputPasswordRepeat" placeholder="Repeat Password">
               </div>
 
-              <div class="text-danger" *ngIf="formSingIn.hasError('passwordsMismatch') && formSingIn.touched">
+              <div class="text-danger" *ngIf="formSingIn.hasError('passwordsMismatch')">
                   Las contraseñas no coinciden.
               </div>
 
@@ -39,3 +40,4 @@
       </div>
   </div>
 </div>
+<app-footer></app-footer>

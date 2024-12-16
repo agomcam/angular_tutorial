@@ -4,11 +4,13 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {AuthService} from '../../../services/auth.service';
 import {error} from 'console';
 import {Router} from '@angular/router';
+import {NavBarComponent} from '../../../components/nav-bar/nav-bar.component';
+import {FooterComponent} from '../../../components/footer/footer.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NavBarComponent, FooterComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
