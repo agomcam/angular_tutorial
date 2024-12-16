@@ -1,16 +1,17 @@
-import { Routes } from '@angular/router';
-import { StatsComponent } from './components/dashboard/stats/stats.component';
-import { ProfileComponent } from './components/dashboard/profile/profile.component';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { SiginComponent } from './pages/auth/sigin/sigin.component';
-import { TasksComponent } from './pages/tasks/tasks.component';
-import { HomeComponent } from './pages/home/home.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { NotfoundComponent } from './pages/notfound/notfound.component';
-import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import {Routes} from '@angular/router';
+import {StatsComponent} from './components/dashboard/stats/stats.component';
+import {ProfileComponent} from './components/dashboard/profile/profile.component';
+import {LoginComponent} from './pages/auth/login/login.component';
+import {SiginComponent} from './pages/auth/sigin/sigin.component';
+import {TasksComponent} from './pages/tasks/tasks.component';
+import {HomeComponent} from './pages/home/home.component';
+import {DashboardComponent} from './pages/dashboard/dashboard.component';
+import {NotfoundComponent} from './pages/notfound/notfound.component';
+import {canActivate, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
+
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'singin', component: SiginComponent },
+  {path: 'login', component: LoginComponent},
+  {path: 'singin', component: SiginComponent},
   {
     path: 'home',
     component: HomeComponent,
@@ -23,12 +24,12 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard', component: DashboardComponent, children: [
-      { path: 'stats', component: StatsComponent },
-      { path: 'profile', component: ProfileComponent }
+      {path: 'stats', component: StatsComponent},
+      {path: 'profile', component: ProfileComponent}
     ],
     ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
-  { path: 'notfound', component: NotfoundComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/notfound', pathMatch: 'full' },
+  {path: 'notfound', component: NotfoundComponent},
+  {path: '', redirectTo: '/home', pathMatch: 'full', ...canActivate(() => redirectUnauthorizedTo(['/login']))},
+  {path: '**', redirectTo: '/notfound', pathMatch: 'full'},
 ];
