@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular_tutorial": {
+    "angular-tutorial": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angular_tutorial",
+            "outputPath": "dist/angular-tutorial",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular_tutorial:build:production"
+              "buildTarget": "angular-tutorial:build:production"
             },
             "development": {
-              "buildTarget": "angular_tutorial:build:development"
+              "buildTarget": "angular-tutorial:build:development"
             }
           },
           "defaultConfiguration": "development"
