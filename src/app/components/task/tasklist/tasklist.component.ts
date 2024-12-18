@@ -22,14 +22,14 @@ export class TasklistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tasklist = this.taskService.getTasks();
-    /*
-        this.taskService.getAllTasks().subscribe(tasks => {
-          this.tasklist = tasks;
-        })
+    // this.tasklist = this.taskService.getTasks();
 
+    this.taskService.getAllTasks().subscribe(tasks => {
+      this.tasklist = tasks;
+      this.taskService.tasklist = tasks;
 
-     */
+    })
+
 
   }
 

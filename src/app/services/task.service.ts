@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class TaskService {
-  private tasklist: Task[] = [
+  tasklist: Task[] = [
     new Task(1, "Tarea 1", "Descripción Tarea 1", TaskPriority.LOW, TaskStatus.PENDING, new Date("11/1/2024"), new Date("11/18/2024"), false),
     new Task(2, "Tarea 2", "Descripción Tarea 2", TaskPriority.HIGH, TaskStatus.IN_PROGRESS, new Date("11/5/2024"), new Date("11/16/2024"), false),
     new Task(3, "Tarea 3", "Descripción Tarea 3", TaskPriority.LOW, TaskStatus.IN_PROGRESS, new Date("11/21/2024"), new Date("11/30/2024"), false),
@@ -18,7 +18,8 @@ export class TaskService {
   ]
   task: Task = new Task(1, "Tarea 1", "Descripción Tarea 1", TaskPriority.LOW, TaskStatus.PENDING, new Date("11/1/2024"), new Date("11/18/2024"), false);
 
-  constructor(private database: Database) { }
+  constructor(private database: Database) {
+  }
 
   getTasks(): Task[] {
     return this.tasklist;
@@ -40,6 +41,7 @@ export class TaskService {
   setTaskToEdit(task: Task) {
     this.taskToEdit = task; // Asignar la tarea seleccionada al formulario
   }
+
   taskToEdit: Task | null = null; // Tarea actualmente en edición
 
 
@@ -124,7 +126,7 @@ export class TaskService {
   }
 
   getAllTasks() {
-    let task = ref(this.database,"/taskList");
+    let task = ref(this.database, "/Tareas");
     return listVal(task) as Observable<Task[]>;
   }
 

@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Task, TaskPriority, TaskStatus } from '../../../models/task.models';
-import { CommonModule } from '@angular/common';
-import { TaskEvent } from '../../../models/TaskEvent.models';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Task, TaskPriority, TaskStatus} from '../../../models/task.models';
+import {CommonModule} from '@angular/common';
+import {TaskEvent} from '../../../models/TaskEvent.models';
 
 @Component({
   selector: 'app-resume',
@@ -12,7 +12,7 @@ import { TaskEvent } from '../../../models/TaskEvent.models';
 })
 
 
-export class ResumeComponent {
+export class ResumeComponent implements OnChanges {
   @Input()
   task: Task = new Task(1, "Tarea 1", "Descripción Tarea 1", TaskPriority.LOW, TaskStatus.PENDING, new Date("11/1/2024"), new Date("11/18/2024"), false);
 
@@ -44,5 +44,12 @@ export class ResumeComponent {
 
   onEditTask() {
     this.editTask.emit(this.task); // Emitir la tarea actual para ser editada
+  }
+
+  // Actualmente solo funciona para depurar, de este modo compruebo si cambia los cambios
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['task']) {
+      console.log(this.task); // muestra por consola la tarea
+    }
   }
 }
