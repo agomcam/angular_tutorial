@@ -5,6 +5,7 @@ import {ResumeComponent} from '../resume/resume.component';
 import {TaskEvent} from '../../../models/TaskEvent.models';
 import {TaskformComponent} from '../taskform/taskform.component';
 import {TaskService} from '../../../services/task.service';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-tasklist',
@@ -21,7 +22,15 @@ export class TasklistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tasklist = this.taskService.getTasks()
+    this.tasklist = this.taskService.getTasks();
+    /*
+        this.taskService.getAllTasks().subscribe(tasks => {
+          this.tasklist = tasks;
+        })
+
+
+     */
+
   }
 
   taskToEdit: Task | null = null; // Tarea actualmente en edición
