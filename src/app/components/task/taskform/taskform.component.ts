@@ -81,17 +81,29 @@ export class TaskformComponent implements OnChanges, OnInit {
     if (changes['taskToEdit'] && changes['taskToEdit'].currentValue) {
       // Modo edición: llenar el formulario
       const task = changes['taskToEdit'].currentValue;
+
+      // Convertir expirationDate a un objeto Date si no lo es
+      let expirationDate = task.expirationDate instanceof Date
+        ? task.expirationDate
+        : new Date(task.expirationDate);
+
+      // Validar si la fecha es válida antes de usar toISOString
+      const isoExpirationDate = !isNaN(expirationDate.getTime())
+        ? expirationDate.toISOString().slice(0, 16)
+        : null;
+
       this.formTaskEdit.patchValue({
         name: task.name,
         description: task.description,
         priority: task.priority,
-        expirationDate: task.expirationDate.toISOString().slice(0, 16),
+        expirationDate: isoExpirationDate,
       });
     } else {
       // Modo creación: limpiar el formulario
       this.formTaskEdit.reset();
     }
   }
+
 
 
 
