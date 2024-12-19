@@ -1,8 +1,7 @@
-import {Injectable, Input} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Task, TaskPriority, TaskStatus} from '../models/task.models';
 import {TaskEvent} from '../models/TaskEvent.models';
-import {Database, listVal} from '@angular/fire/database';
-import {ref} from '@angular/fire/database';
+import {Database, get, listVal, ref, DataSnapshot, remove} from '@angular/fire/database';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -130,4 +129,14 @@ export class TaskService {
     return listVal(task) as Observable<Task[]>;
   }
 
+
+  getTaskById(id: string) {
+    let task = ref(this.database, `/Tareas/${id}`);
+    return get(task) as Promise<DataSnapshot>;
+  }
+
+  removeTask(id:string){
+    let task = ref(this.database, `/Tareas/${id}`);
+    return remove(task) as Promise<void>;
+  }
 }

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
 import {Task, TaskPriority, TaskStatus} from '../../../models/task.models';
 import {CommonModule} from '@angular/common';
 import {TaskEvent} from '../../../models/TaskEvent.models';
+import {TaskService} from '../../../services/task.service';
 
 @Component({
   selector: 'app-resume',
@@ -21,6 +22,9 @@ export class ResumeComponent implements OnChanges {
 
   @Output()
   editTask = new EventEmitter<Task>();
+
+  constructor(private taskService: TaskService) {
+  }
 
   setStatus(id: number) {
     this.eventTaskModify.emit(new TaskEvent("setStatus", this.task.id))
