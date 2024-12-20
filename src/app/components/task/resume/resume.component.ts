@@ -31,9 +31,13 @@ export class ResumeComponent implements OnChanges {
 
   }
 
-  deleteTask(id: number) {
-
-    this.eventTaskModify.emit(new TaskEvent("deleteTask", this.task.id))
+  deleteTask(id: string) {
+    this.taskService.removeTask(id)
+      .then(() => console.log(`La tarea eliminada tiene el id: ${id}`))
+      .catch((error) => {
+        console.log("Error: ", error)
+      });
+    //  this.eventTaskModify.emit(new TaskEvent("deleteTask", this.task.id))
   }
 
 

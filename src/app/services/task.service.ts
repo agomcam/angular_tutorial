@@ -136,6 +136,7 @@ export class TaskService {
   }
 
   removeTask(id:string){
+    console.log(id);
     let task = ref(this.database, `/Tareas/${id}`);
     return remove(task) as Promise<void>;
   }

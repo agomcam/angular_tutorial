@@ -57,7 +57,7 @@
                         </p>
                         <p class="card-text">Fecha de expiración: {{task.expirationDate}}</p>
                         <p class="card-text">Acciones:<i class="bi bi-pencil-square" (click)="onEditTask()"></i>
-                            <i class="bi bi-trash" (click)="deleteTask(task.id)"></i>
+                            <i class="bi bi-trash" (click)="deleteTask(task.id.toString())"></i>
                         </p>
                     </div>
                 </div>
