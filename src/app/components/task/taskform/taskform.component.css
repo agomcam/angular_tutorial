@@ -1,0 +1,35 @@
+.body {
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}
+.container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+h1 {
+  font-size: 2rem;
+  color: #333333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.btn-primary {
+  width: 100%;
+  background-color: #4facfe;
+  border: none;
+  transition: background-color 0.3s;
+}
+.btn-primary:hover {
+  background-color: #00c6ff;
+}
+.form-control {
+  border-radius: 0.5rem;
+}
+.form-group label {
+  font-weight: 600;
+}

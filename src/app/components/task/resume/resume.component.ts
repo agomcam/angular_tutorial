@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Task, TaskPriority, TaskStatus} from '../../../models/task.models';
 import {CommonModule} from '@angular/common';
-import {TaskEvent} from '../../../models/TaskEvent.models';
 import {TaskService} from '../../../services/task.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-resume',
@@ -13,51 +13,39 @@ import {TaskService} from '../../../services/task.service';
 })
 
 
-export class ResumeComponent implements OnChanges {
+export class ResumeComponent  {
   @Input()
-  task: Task = new Task(1, "Tarea 1", "Descripción Tarea 1", TaskPriority.LOW, TaskStatus.PENDING, new Date("11/1/2024"), new Date("11/18/2024"), false);
+  task: Task = new Task("1", "Tarea 1", "Descripción Tarea 1", TaskPriority.LOW, TaskStatus.PENDING, new Date("11/1/2024"), new Date("11/18/2024"), false);
 
-  @Output()
-  eventTaskModify = new EventEmitter<TaskEvent>();
 
-  @Output()
-  editTask = new EventEmitter<Task>();
-
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService, private router: Router) {
   }
 
-  setStatus(id: number) {
-    this.eventTaskModify.emit(new TaskEvent("setStatus", this.task.id))
-
+  setStatus(id: string) {
+   this.taskService.setStatus(id);
   }
 
   deleteTask(id: string) {
-    this.taskService.removeTask(id)
+    this.taskService.removeTask(id.toString()) // Asegurar conversión
       .then(() => console.log(`La tarea eliminada tiene el id: ${id}`))
       .catch((error) => {
-        console.log("Error: ", error)
+        console.log("Error: ", error);
       });
-    //  this.eventTaskModify.emit(new TaskEvent("deleteTask", this.task.id))
   }
 
 
-  lowerPriority(id: number) {
-    this.eventTaskModify.emit(new TaskEvent("lowerPriority", this.task.id))
+
+  lowerPriority(id: string) {
+    this.taskService.lowerPriority(id)
   }
 
 
-  raiseifpriority(id: number) {
-    this.eventTaskModify.emit(new TaskEvent("raiseifpriority", this.task.id))
+  raisePriority(id: string) {
+   this.taskService.raisePriority(id)
   }
 
-  onEditTask() {
-    this.editTask.emit(this.task); // Emitir la tarea actual para ser editada
+  onEditTask(id: string) {
+    this.router.navigate([`/formTaskEdit/${id}`]);
   }
 
-  // Actualmente solo funciona para depurar, de este modo compruebo si cambia los cambios
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['task']) {
-      console.log(this.task); // muestra por consola la tarea
-    }
-  }
 }

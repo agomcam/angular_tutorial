@@ -23,41 +23,12 @@ export class TasklistComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //this.tasklist = this.taskService.getTasks();
-
     this.taskService.getAllTasks().subscribe(tasks => {
       this.tasklist = tasks;
-      this.taskService.tasklist = tasks;
 
     })
-
-
-  }
-
-  taskToEdit: Task | null = null; // Tarea actualmente en edición
-
-
-  setTaskToEdit(task: Task) {
-    this.taskService.setTaskToEdit(task);
-    this.taskToEdit = this.taskService.taskToEdit;
-  }
-
-  saveTask(task: Task) {
-    if (task.id > 0) {
-      // Editar tarea existente
-      console.log('Guardando tarea editada:', task);
-      this.taskService.saveTask(task);
-    } else {
-      task.id = Math.floor(Math.random() * 1000000)
-      console.log('Guardando nueva tarea:', task);
-      this.taskService.addNewTask(task);
-    }
-    this.tasklist = [...this.taskService.getTasks()]; // Actualizar la lista de tareas
-    this.taskToEdit = null; // Limpiar el modo de edición
   }
 
 
-  modifyTask(taskEvent: TaskEvent) {
-    this.taskService.modifyTask(taskEvent)
-  }
+
 }

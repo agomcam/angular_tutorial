@@ -1,127 +1,104 @@
 import {Injectable} from '@angular/core';
 import {Task, TaskPriority, TaskStatus} from '../models/task.models';
 import {TaskEvent} from '../models/TaskEvent.models';
-import {Database, get, listVal, ref, DataSnapshot, remove} from '@angular/fire/database';
+import {Database, get, listVal, ref, DataSnapshot, remove, push, set} from '@angular/fire/database';
 import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  tasklist: Task[] = [
-    new Task(1, "Tarea 1", "Descripción Tarea 1", TaskPriority.LOW, TaskStatus.PENDING, new Date("11/1/2024"), new Date("11/18/2024"), false),
-    new Task(2, "Tarea 2", "Descripción Tarea 2", TaskPriority.HIGH, TaskStatus.IN_PROGRESS, new Date("11/5/2024"), new Date("11/16/2024"), false),
-    new Task(3, "Tarea 3", "Descripción Tarea 3", TaskPriority.LOW, TaskStatus.IN_PROGRESS, new Date("11/21/2024"), new Date("11/30/2024"), false),
-    new Task(4, "Tarea 4", "Descripción Tarea 4", TaskPriority.HIGH, TaskStatus.COMPLETED, new Date("11/8/2024"), new Date("11/21/2024"), false),
-    new Task(5, "Tarea 5", "Descripción Tarea 5", TaskPriority.MEDIUM, TaskStatus.PENDING, new Date("11/10/2024"), new Date("11/30/2024"), false)
-  ]
-  task: Task = new Task(1, "Tarea 1", "Descripción Tarea 1", TaskPriority.LOW, TaskStatus.PENDING, new Date("11/1/2024"), new Date("11/18/2024"), false);
 
   constructor(private database: Database) {
   }
 
-  getTasks(): Task[] {
-    return this.tasklist;
+
+  setStatus(id: string) {
+    console.log('set status', id);
+    this.getTaskById(id).then((taskDataSnapshot) => {
+      let task = taskDataSnapshot.val();
+
+      console.log(taskDataSnapshot.val()); // Estoy editando aquí
+
+      if (task.status == TaskStatus.COMPLETED) {
+        task.status = TaskStatus.PENDING
+      } else if (task.status == TaskStatus.IN_PROGRESS) {
+        task.status = TaskStatus.COMPLETED
+      } else {
+        task.status = TaskStatus.IN_PROGRESS
+      }
+      this.saveTask(task).catch((error) => {
+        console.log(error)
+      });
+    })
+
   }
 
-  addNewTask(task: Task) {
-    console.log('Añadiendo tarea al servicio:', task);
-    this.tasklist.push(task); // Agregar tarea a la lista
+
+  lowerPriority(id: string) {
+    this.getTaskById(id).then((taskDataSnapshot) => {
+      let task = taskDataSnapshot.val();
+
+      if (task.priority == TaskPriority.HIGH) {
+        task.priority = TaskPriority.MEDIUM;
+      } else if (task.priority == TaskPriority.MEDIUM) {
+        task.priority = TaskPriority.LOW;
+      }
+
+      // Guardar los cambios en la base de datos
+      this.saveTask(task).catch((error) => {
+        console.log(error);
+      });
+    });
   }
 
-  saveTask(updatedTask: Task) {
-    const index = this.tasklist.findIndex(task => task.id === updatedTask.id);
-    if (index > -1) {
-      this.tasklist[index] = updatedTask; // Reemplazar la tarea existente
-    }
-    this.taskToEdit = null; // Limpiar el modo de edición
-  }
 
-  setTaskToEdit(task: Task) {
-    this.taskToEdit = task; // Asignar la tarea seleccionada al formulario
-  }
+  raisePriority(id: string) {
+    this.getTaskById(id)
+      .then((taskDataSnapshot) => {
+        let task = taskDataSnapshot.val();
 
-  taskToEdit: Task | null = null; // Tarea actualmente en edición
-
-
-  modifyTask(taskEvent: TaskEvent) {
-
-    switch (taskEvent.action) {
-      case "raiseifpriority":
-        this.raiseifpriority(taskEvent.taskId);
-        break;
-
-      case "deleteTask":
-        this.deleteTask(taskEvent.taskId);
-        break;
-
-      case "lowerPriority":
-        this.lowerPriority(taskEvent.taskId);
-        break;
-
-      case "setStatus":
-        this.setStatus(taskEvent.taskId);
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  setStatus(id: number) {
-    for (let index = 0; index < this.tasklist.length; index++) {
-      if (this.tasklist[index].id == id) {
-        if (this.tasklist[index].status == TaskStatus.COMPLETED) {
-          this.tasklist[index].status = TaskStatus.PENDING
-        } else if (this.tasklist[index].status == TaskStatus.IN_PROGRESS) {
-          this.tasklist[index].status = TaskStatus.COMPLETED
-        } else {
-          this.tasklist[index].status = TaskStatus.IN_PROGRESS
+        if (task.priority == TaskPriority.MEDIUM) {
+          task.priority = TaskPriority.HIGH
+        } else if (task.priority == TaskPriority.LOW) {
+          task.priority = TaskPriority.MEDIUM
         }
 
-        break;
-      }
-    }
+        // Una vez actualizada la prioridad actualizamos la tarea
+        this.saveTask(task).catch((err) => {
+          console.log(err)
+        });
+      })
+      .catch(err => {
+        console.log(err)
+      });
+
 
   }
 
-  deleteTask(id: number) {
-    for (let index = 0; index < this.tasklist.length; index++) {
-      if (this.tasklist[index].id == id) {
-        this.tasklist[index].isDelete = true;
-        break;
+
+  /**
+   * Funcion que sirve para guardar una tarea o actualizarlo
+   * @param task
+   */
+  saveTask(task: Task): Promise<void> {
+    console.log(task);
+    let taskRef = ref(this.database, `/Tareas/${task.id}`);
+
+    // Si no tiene id significa que es para guardar un anime
+    if (!task.id) {
+      let newAnimeRef = ref(this.database, `/Tareas/`);
+
+      // Creamos el id del nuevo anime
+      taskRef = push(newAnimeRef);
+      if (taskRef.key != null) {
+        task.id = taskRef.key;
+        task.status = TaskStatus.PENDING
       }
 
     }
-  }
+    return set(taskRef, task) as Promise<void>;
 
-
-  lowerPriority(id: number) {
-    for (let index = 0; index < this.tasklist.length; index++) {
-      if (this.tasklist[index].id == id) {
-        if (this.tasklist[index].priority == TaskPriority.HIGH) {
-          this.tasklist[index].priority = TaskPriority.MEDIUM
-        } else if (this.tasklist[index].priority == TaskPriority.MEDIUM) {
-          this.tasklist[index].priority = TaskPriority.LOW
-        }
-
-        break;
-      }
-    }
-  }
-
-  raiseifpriority(id: number) {
-    for (let index = 0; index < this.tasklist.length; index++) {
-      if (this.tasklist[index].id == id) {
-        if (this.tasklist[index].priority == TaskPriority.MEDIUM) {
-          this.tasklist[index].priority = TaskPriority.HIGH
-        } else if (this.tasklist[index].priority == TaskPriority.LOW) {
-          this.tasklist[index].priority = TaskPriority.MEDIUM
-        }
-
-        break;
-      }
-    }
   }
 
   getAllTasks() {
@@ -131,12 +108,11 @@ export class TaskService {
 
 
   getTaskById(id: string) {
-    let task = ref(this.database, `/Tareas/${id}`);
+    let task = ref(this.database, '/Tareas/' + id);
     return get(task) as Promise<DataSnapshot>;
   }
 
-  removeTask(id:string){
-    console.log(id);
+  removeTask(id: string) {
     let task = ref(this.database, `/Tareas/${id}`);
     return remove(task) as Promise<void>;
   }

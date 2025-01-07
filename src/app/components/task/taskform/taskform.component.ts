@@ -3,8 +3,9 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {customValidator, customValidatorPriority} from './taskForm.validators';
 import {Task, TaskStatus} from '../../../models/task.models';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {TaskService} from '../../../services/task.service';
+import exp from 'node:constants';
 
 @Component({
   selector: 'app-taskform',
@@ -13,14 +14,13 @@ import {TaskService} from '../../../services/task.service';
   templateUrl: './taskform.component.html',
   styleUrl: './taskform.component.css'
 })
-export class TaskformComponent implements OnChanges, OnInit {
+export class TaskformComponent implements OnInit {
 
-  @Input()
   taskToEdit: Task | null = null; // Tarea a editar (null si estamos añadiendo)
 
   formTaskEdit: FormGroup
 
-  constructor(private taskService: TaskService, private route: ActivatedRoute, formBuilder: FormBuilder) {
+  constructor(private taskService: TaskService,private router:Router, private route: ActivatedRoute, formBuilder: FormBuilder) {
     this.formTaskEdit = formBuilder.group({
       'name': ['', [Validators.required, Validators.maxLength(50)]],
       'description': ['', [Validators.required, Validators.maxLength(255)]],
@@ -33,79 +33,50 @@ export class TaskformComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('id')
-      console.log(id)
+      this.taskService.getTaskById(id!)
+        .then((taskVal) => {
+          if (taskVal.exists()) {
+            this.taskToEdit = taskVal.val();
+
+            if (this.taskToEdit) {
+              const expirationDate = this.taskToEdit.expirationDate
+                ? new Date(this.taskToEdit.expirationDate).toISOString().slice(0, 16) // Formato YYYY-MM-DDTHH:mm
+                : null;
+
+              console.log(this.taskToEdit);
+              this.formTaskEdit.patchValue({
+                name: this.taskToEdit.name,
+                description: this.taskToEdit.description,
+                priority: this.taskToEdit.priority,
+                expirationDate: expirationDate, // Formato compatible con <input type="datetime-local">
+              });
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
     })
   }
-
-  @Output() formSubmit = new EventEmitter<Task>();
 
   onSubmit() {
     if (this.formTaskEdit.valid) {
       const taskData = this.formTaskEdit.value;
 
       if (this.taskToEdit) {
-        // Editar tarea existente
-        const updatedTask: Task = {
-          ...this.taskToEdit,
-          ...taskData,
-          expirationDate: new Date(taskData.expirationDate),
-        };
-        console.log('Editando tarea:', updatedTask);
-        this.formSubmit.emit(updatedTask); // Emitir la tarea editada
-      } else {
-        // Añadir nueva tarea
-        const newTask: Task = new Task(
-          taskData.id = -1, // Generar ID aleatorio
-          taskData.name,
-          taskData.description,
-          taskData.priority,
-          TaskStatus.PENDING,
-          new Date(taskData.expirationDate),
-          new Date(), // Fecha de creación
-          false
-        );
-        console.log('Añadiendo nueva tarea:', newTask);
-        this.formSubmit.emit(newTask); // Emitir nueva tarea
+        taskData.id = this.taskToEdit.id;
+        taskData.status = this.taskToEdit.status;
       }
-
+      this.taskService.saveTask(taskData)
+        .then(() =>{
+          this.router.navigate(['/tasks'])
+        })
+        .catch((error) => {console.log(error);})
       this.formTaskEdit.reset(); // Limpiar el formulario
     } else {
       console.log('El formulario tiene errores:', this.formTaskEdit.errors);
     }
   }
-
-
-
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['taskToEdit'] && changes['taskToEdit'].currentValue) {
-      // Modo edición: llenar el formulario
-      const task = changes['taskToEdit'].currentValue;
-
-      // Convertir expirationDate a un objeto Date si no lo es
-      let expirationDate = task.expirationDate instanceof Date
-        ? task.expirationDate
-        : new Date(task.expirationDate);
-
-      // Validar si la fecha es válida antes de usar toISOString
-      const isoExpirationDate = !isNaN(expirationDate.getTime())
-        ? expirationDate.toISOString().slice(0, 16)
-        : null;
-
-      this.formTaskEdit.patchValue({
-        name: task.name,
-        description: task.description,
-        priority: task.priority,
-        expirationDate: isoExpirationDate,
-      });
-    } else {
-      // Modo creación: limpiar el formulario
-      this.formTaskEdit.reset();
-    }
-  }
-
-
-
 
 
 }

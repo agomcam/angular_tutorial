@@ -3,14 +3,12 @@
 
     <!-- Tarejeta -->
 
-    <app-taskform [taskToEdit]="taskToEdit" (formSubmit)="saveTask($event)"/>
-
     <div class="col-md-12">
       <ng-container class="ng-container" *ngFor="let task of tasklist ">
-        <app-resume [task]="task" (eventTaskModify)="modifyTask($event)" (editTask)="setTaskToEdit($event)"/>
+        <app-resume [task]="task"/>
       </ng-container>
 
     </div>
   </div>
-
 </div>
+

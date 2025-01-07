@@ -3,19 +3,20 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {error} from 'console';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {NavBarComponent} from '../../../components/nav-bar/nav-bar.component';
 import {FooterComponent} from '../../../components/footer/footer.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NavBarComponent, FooterComponent],
+  imports: [CommonModule, ReactiveFormsModule, NavBarComponent, FooterComponent, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   formLogin: FormGroup;
+  isInvalid: boolean = false;
 
   constructor(formBuilder: FormBuilder, private serviveAuth: AuthService, private router: Router) {
     this.formLogin = formBuilder.group({
@@ -30,7 +31,7 @@ export class LoginComponent {
       console.log("El login es valido")
       this.serviveAuth.login(this.formLogin.value)
         .then(response => this.router.navigate(['/home']))
-        .catch(error => console.log(error))
+        .catch(() => this.isInvalid = true);
     } else {
       console.log("El login es invalido")
     }

@@ -11,7 +11,7 @@ export enum TaskPriority {
 }
 
 export class Task {
-    id: number;
+    id: string;
     name: string;
     description: string;
     priority: TaskPriority;
@@ -20,7 +20,7 @@ export class Task {
     expirationDate: Date;
     isDelete: boolean;
 
-    constructor(id: number, name: string, description: string, priority: TaskPriority, status: TaskStatus, creationDate: Date, expirationDate: Date, isDelete: boolean) {
+    constructor(id: string, name: string, description: string, priority: TaskPriority, status: TaskStatus, creationDate: Date, expirationDate: Date, isDelete: boolean) {
         this.id = id;
         this.name = name;
         this.description = description;
