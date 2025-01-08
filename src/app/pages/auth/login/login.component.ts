@@ -30,7 +30,13 @@ export class LoginComponent {
     if (this.formLogin.valid) {
       console.log("El login es valido")
       this.serviveAuth.login(this.formLogin.value)
-        .then(response => this.router.navigate(['/home']))
+        .then((response) => {
+
+          this.router.navigate(['/home']).catch((error) => {
+            console.log(error);
+          });
+
+        })
         .catch(() => this.isInvalid = true);
     } else {
       console.log("El login es invalido")
@@ -39,7 +45,9 @@ export class LoginComponent {
 
   loginGoogle() {
     this.serviveAuth.loginWithGoogle()
-      .then(response => this.router.navigate(['/home']))
+      .then(response => {
+        this.router.navigate(['/home'])
+      })
       .catch(error => console.log(error))
   }
 }

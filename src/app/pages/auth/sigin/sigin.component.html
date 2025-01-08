@@ -17,7 +17,7 @@
                                      'is-invalid': formSingIn.get('email')?.invalid && formSingIn.get('email')?.touched}"
                    formControlName="email" type="email" class="form-control" id="exampleInputEmail" placeholder="Email">
           </div>
-
+          <small *ngIf="isErrorEmail" class="text-danger">Email ya en uso</small>
           <!-- Contraseña -->
           <div class="form-group">
             <label for="exampleInputPassword">Password</label>
@@ -60,11 +60,12 @@
 
 
           <div class="form-check form-switch mt-1">
-            <input class="form-check-input" formControlName="isAdmin" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-            <label class="form-check-label" >Is admin</label>
+            <input class="form-check-input" formControlName="isAdmin" type="checkbox" role="switch"
+                   id="flexSwitchCheckDefault">
+            <label class="form-check-label">Is admin</label>
           </div>
-
           <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+          <p class="mt-3 d-flex justify-content-center">¿Ya tienes?<span> <a routerLink="/login">Logueate aquí</a> </span></p>
         </form>
       </div>
     </div>

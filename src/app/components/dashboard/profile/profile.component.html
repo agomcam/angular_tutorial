@@ -1,1 +1,15 @@
-<p>profile works!</p>
+<div class="body">
+  <div class="container">
+    <h1>Perfil de Usuario</h1>
+    <div class="card">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Nombre:</strong> {{person?.name}}</li>
+        <li class="list-group-item"><strong>Apellido:</strong> {{person?.surname}}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{person?.email}}</li>
+        <li class="list-group-item"><strong>Rol:</strong> {{person?.role}}</li>
+        <li class="list-group-item"><strong>Fecha de creación:</strong> {{person?.createdAt}}</li>
+      </ul>
+    </div>
+    <button class="btn btn-primary mt-3">Editar Perfil</button>
+  </div>
+</div>

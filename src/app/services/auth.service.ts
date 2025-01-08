@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider
 } from '@angular/fire/auth';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class AuthService {
     auth.onAuthStateChanged((user) => {
       this.isAuthenticated = !!user;
     });
+  }
+
+  getCurrentUser(){
+    return this.auth.currentUser;
   }
 
   register({email, password}: any) {
