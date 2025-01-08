@@ -31,13 +31,37 @@
           <div class="form-group">
             <label for="exampleInputPasswordRepeat">Repeat Password</label>
             <input [ngClass]="{'is-valid': formSingIn.get('repeatPassword')?.valid && !formSingIn.hasError('passwordsMismatch'),
-                                     'is-invalid': formSingIn.hasError('passwordsMismatch') && formSingIn.get('repeatPassword')?.touched}"
+                                     'is-invalid': formSingIn.get('passwordsMismatch') && formSingIn.get('repeatPassword')?.touched}"
                    formControlName="repeatPassword" type="password" class="form-control" id="exampleInputPasswordRepeat"
                    placeholder="Repeat Password">
           </div>
 
           <div class="text-danger" *ngIf="formSingIn.hasError('passwordsMismatch')">
             Las contraseñas no coinciden.
+          </div>
+
+          <!-- Nombre -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input [ngClass]="{'is-valid': formSingIn.get('name')?.valid,
+                     'is-invalid': formSingIn.get('name')?.invalid && formSingIn.get('name')?.touched}"
+                   formControlName="name" type="text" class="form-control" id="name"
+                   placeholder="Name">
+          </div>
+
+          <!-- Apellido -->
+          <div class="form-group">
+            <label for="surname">Surname</label>
+            <input [ngClass]="{'is-valid': formSingIn.get('surname')?.valid,
+                     'is-invalid': formSingIn.get('surname')?.invalid && formSingIn.get('surname')?.touched}"
+                   formControlName="surname" type="text" class="form-control" id="surname"
+                   placeholder="Surname">
+          </div>
+
+
+          <div class="form-check form-switch mt-1">
+            <input class="form-check-input" formControlName="isAdmin" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <label class="form-check-label" >Is admin</label>
           </div>
 
           <button type="submit" class="btn btn-primary mt-2">Enviar</button>
