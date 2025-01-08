@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PersonService} from '../../../services/person.service';
 import {Person} from '../../../models/Person.models';
 import {AuthService} from '../../../services/auth.service';
@@ -13,17 +13,24 @@ import {AuthService} from '../../../services/auth.service';
 export class ProfileComponent implements OnInit {
   person: Person | null = null;
 
-  constructor(private personService: PersonService, private authService:AuthService) {
+  constructor(private personService: PersonService, private authService: AuthService) {
   }
 
   ngOnInit(): void {
     const currentPerson = this.authService.getCurrentUser();
     if (currentPerson) {
-      this.personService.getPersonByUID(currentPerson.uid).then(person => {
-        if (person.exists()) {
-          this.person = person.val() as Person;
-        }
-      })
+
+      if (currentPerson?.providerData[0].providerId == "google.com") {
+        this.person = this.personService.getPersonByGoogle(currentPerson)
+      } else {
+        this.personService.getPersonByUID(currentPerson.uid).then(person => {
+          if (person.exists()) {
+            this.person = person.val() as Person;
+          }
+        })
+      }
+
+
     }
   }
 }
