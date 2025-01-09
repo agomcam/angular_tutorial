@@ -31,6 +31,6 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {path: 'notfound', component: NotfoundComponent},
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '', redirectTo: '/tasks', pathMatch: 'full'},
   {path: '**', redirectTo: '/notfound', pathMatch: 'full'},
 ];

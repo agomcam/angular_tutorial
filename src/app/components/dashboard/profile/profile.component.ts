@@ -17,20 +17,19 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentPerson = this.authService.getCurrentUser();
-    if (currentPerson) {
 
-      if (currentPerson?.providerData[0].providerId == "google.com") {
-        this.person = this.personService.getPersonByGoogle(currentPerson)
-      } else {
-        this.personService.getPersonByUID(currentPerson.uid).then(person => {
-          if (person.exists()) {
-            this.person = person.val() as Person;
+    this.authService.getUserAuthenticated().subscribe((user) => {
+      if (user) {
+        this.personService.getPersonByUID(user.uid).subscribe((person) => {
+          if (person) {
+            this.person = person;
+          } else {
+            this.person = this.personService.getPersonByGoogle(user)
           }
+
         })
       }
-
-
-    }
+    })
   }
+
 }

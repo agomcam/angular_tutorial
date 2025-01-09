@@ -32,7 +32,7 @@ export class LoginComponent {
       this.serviveAuth.login(this.formLogin.value)
         .then((response) => {
 
-          this.router.navigate(['/home']).catch((error) => {
+          this.router.navigate(['/']).catch((error) => {
             console.log(error);
           });
 
@@ -46,7 +46,7 @@ export class LoginComponent {
   loginGoogle() {
     this.serviveAuth.loginWithGoogle()
       .then(response => {
-        this.router.navigate(['/home'])
+        this.router.navigate(['/'])
       })
       .catch(error => console.log(error))
   }

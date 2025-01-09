@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut,
   signInWithPopup,
-  GoogleAuthProvider
+  signOut, User
 } from '@angular/fire/auth';
 import {Observable} from 'rxjs';
 
@@ -13,15 +14,11 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  isAuthenticated: boolean = false;
 
   constructor(private auth: Auth) {
-    auth.onAuthStateChanged((user) => {
-      this.isAuthenticated = !!user;
-    });
   }
 
-  getCurrentUser(){
+  getCurrentUser() {
     return this.auth.currentUser;
   }
 
@@ -39,5 +36,35 @@ export class AuthService {
 
   logout() {
     return signOut(this.auth);
+  }
+
+  isAuthenticated(): Observable<User|null> {
+    return new Observable((observer) => {
+      onAuthStateChanged(
+        this.auth,
+        (user) => {
+          observer.next(user);
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
+    });
+  }
+
+  getUserAuthenticated(): Observable<User | null> {
+    return new Observable((observer) => {
+      onAuthStateChanged(
+        this.auth,
+        (user) => {
+          observer.next(user);
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
+    });
   }
 }
