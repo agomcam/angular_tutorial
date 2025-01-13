@@ -8,6 +8,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {NotfoundComponent} from './pages/notfound/notfound.component';
 import {canActivate, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
+import {authGuard} from './guards/auth.guard';
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -20,7 +21,7 @@ export const routes: Routes = [
   {
     path: 'tasks',
     component: TasksComponent,
-    ...canActivate(() => redirectUnauthorizedTo(['/login']))
+    canActivate: [authGuard], data: {role: "*"}
   },
   {path: 'formTaskEdit/:id', component: HomeComponent},
   {
