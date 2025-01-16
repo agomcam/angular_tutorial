@@ -2,15 +2,12 @@ import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
-import {error} from 'console';
 import {Router, RouterLink} from '@angular/router';
-import {NavBarComponent} from '../../../components/nav-bar/nav-bar.component';
-import {FooterComponent} from '../../../components/footer/footer.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NavBarComponent, FooterComponent, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -45,8 +42,12 @@ export class LoginComponent {
 
   loginGoogle() {
     this.serviveAuth.loginWithGoogle()
-      .then(response => {
-        this.router.navigate(['/'])
+      .then((response) => {
+        console.log("No esta bien configurao")
+        this.router.navigate(['/']).catch((error) => {
+          console.log(error);
+        });
+
       })
       .catch(error => console.log(error))
   }

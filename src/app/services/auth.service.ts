@@ -46,7 +46,6 @@ export class AuthService {
         this.auth,
         (user) => {
           observer.next(user);
-          observer.complete();
         },
         (error) => {
           observer.error(error);
@@ -61,7 +60,6 @@ export class AuthService {
         this.auth,
         (user) => {
           observer.next(user);
-          observer.complete();
         },
         (error) => {
           observer.error(error);

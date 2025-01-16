@@ -3,8 +3,7 @@ import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {CommonModule} from '@angular/common';
 import {PersonService} from '../../services/person.service';
-import {Person, PersonType} from '../../models/Person.models';
-import {User} from '@angular/fire/auth';
+import {PersonType} from '../../models/Person.models';
 
 
 @Component({
@@ -26,18 +25,19 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.authService.getUserAuthenticated().subscribe((user: User | null) => {
+    this.authService.getUserDataAuth().subscribe(({user, person}) => {
       if (user) {
-       this.isAuthenticated = true;
-       this.personService.getPersonByUID(user.uid).subscribe((person: Person) => {
-         if (person) {
-           this.rolePerson = person.role;
-           console.log(this.rolePerson);
-         }
-       })
+        this.isAuthenticated = true;
+
+        if (person && person.role) {
+          this.rolePerson = person.role;
+          this.isAuthenticated = true;
+        }
+      }else{
+        this.isAuthenticated = false;
       }
     })
+
 
   }
 

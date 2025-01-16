@@ -16,7 +16,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    ...canActivate(() => redirectUnauthorizedTo(['/login']))
+    canActivate: [authGuard], data: {role: "ADMIN"}
   },
   {
     path: 'tasks',
@@ -29,7 +29,7 @@ export const routes: Routes = [
       {path: 'stats', component: StatsComponent},
       {path: 'profile', component: ProfileComponent}
     ],
-    ...canActivate(() => redirectUnauthorizedTo(['/login']))
+    canActivate: [authGuard], data: {role: "*"}
   },
   {path: 'notfound', component: NotfoundComponent},
   {path: '', redirectTo: '/tasks', pathMatch: 'full'},
